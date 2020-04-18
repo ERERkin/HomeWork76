@@ -25,10 +25,12 @@ public interface PaymentRepo extends JpaRepository<Payment, Long> {
     List<Payment> findAllBy(@Param("status") Status status);
     //@Param("startDate") @Param("endDate")
 
-    List<Payment> findAllByCreatedDateBetweenAndByAccountFrom_Client_Id(
-            Date createDateStarted,
-            Date createDateEnd,
-            Long clientId);
+    @Query("select p from Payment p where p.accountFrom.client.id = :client_id and p.createdDate " +
+            "between :start and :end ")
+    List<Payment> findAllByCreatedDatePeriodAndClientQuery(
+            @Param("start") Date createDateStarted,
+            @Param("end") Date createDateEnd,
+            @Param("client_id") Long clientId);
 
     @Query(value = "select p.* from p_payments p" +
             " left join p_accounts pa on p_payments.account_from_id = pa.id" +

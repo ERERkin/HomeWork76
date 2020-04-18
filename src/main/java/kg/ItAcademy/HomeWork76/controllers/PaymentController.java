@@ -6,6 +6,8 @@ import kg.ItAcademy.HomeWork76.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -46,15 +48,18 @@ public class PaymentController {
     }
 
     @GetMapping("/getByDateAndClient/{createDateStarted}&{createDateEnd}&{clientId}")
-    String findAllByCreatedDateBetweenAndByAccountFrom_Client_Id(
-            @PathVariable("createDateStarted") Date createDateStarted,
-            @PathVariable("createDateEnd") Date createDateEnd,
-            @PathVariable("clientId") Long clientId){
-        return "hi" + createDateStarted + " " + createDateEnd + " " + clientId;
-        /*return paymentService.findAllByCreatedDateBetweenAndByAccountFrom_Client_Id(
-                createDateStarted,
-                createDateEnd,
+    List<Payment> findAllByCreatedDatePeriodAndClientQuery(
+            @PathVariable("createDateStarted") String createDateStarted,
+            @PathVariable("createDateEnd") String createDateEnd,
+            @PathVariable("clientId") Long clientId) throws ParseException {
+        SimpleDateFormat formatter =new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 =formatter.parse(createDateStarted);
+        Date date2 =formatter.parse(createDateEnd);
+        //return "hi" + " " + date1 + " " + date2;
+        return paymentService.findAllByCreatedDatePeriodAndClientQuery(
+                date1,
+                date2,
                 clientId
-        );*/
+        );
     }
 }

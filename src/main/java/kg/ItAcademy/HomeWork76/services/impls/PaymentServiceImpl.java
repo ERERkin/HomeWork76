@@ -46,14 +46,16 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> findAllByCreatedDateBetweenAndByAccountFrom_Client_Id(
+    public List<Payment> findAllByCreatedDatePeriodAndClientQuery(
             Date createDateStarted,
             Date createDateEnd,
-            Long clientId){
-        return paymentRepo.findAllByCreatedDateBetweenAndByAccountFrom_Client_Id(
+            Long clientId
+    ){
+        return paymentRepo.findAllByCreatedDatePeriodAndClientQuery(
                 createDateStarted,
                 createDateEnd,
-                clientId);
+                clientId
+        );
     };
 
     @Override

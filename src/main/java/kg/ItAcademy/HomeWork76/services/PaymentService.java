@@ -16,7 +16,7 @@ public interface PaymentService extends BaseService<Payment> {
 
     List<Payment> getByClientIdNative(Long clientId);
 
-    List<Payment> findAllByCreatedDateBetweenAndByAccountFrom_Client_Id(
+    List<Payment> findAllByCreatedDatePeriodAndClientQuery(
             Date createDateStarted,
             Date createDateEnd,
             Long clientId);
