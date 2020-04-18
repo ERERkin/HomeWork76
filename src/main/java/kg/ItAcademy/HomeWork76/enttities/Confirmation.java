@@ -27,4 +27,7 @@ public class Confirmation {
 
     @Column(name = "answer_code")
     Integer answerCode;
+
+    @Column(name = "answer_code_word")
+    String answerCodeWord;
 }

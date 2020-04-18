@@ -6,6 +6,7 @@ import kg.ItAcademy.HomeWork76.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -42,5 +43,18 @@ public class PaymentController {
     @GetMapping("/getByClientIdNative/{clientId}")
     public List<Payment> getByClientIdNative(@PathVariable("clientId") Long clientId) {
         return paymentService.getByClientIdNative(clientId);
+    }
+
+    @GetMapping("/getByDateAndClient/{createDateStarted}&{createDateEnd}&{clientId}")
+    String findAllByCreatedDateBetweenAndByAccountFrom_Client_Id(
+            @PathVariable("createDateStarted") Date createDateStarted,
+            @PathVariable("createDateEnd") Date createDateEnd,
+            @PathVariable("clientId") Long clientId){
+        return "hi" + createDateStarted + " " + createDateEnd + " " + clientId;
+        /*return paymentService.findAllByCreatedDateBetweenAndByAccountFrom_Client_Id(
+                createDateStarted,
+                createDateEnd,
+                clientId
+        );*/
     }
 }

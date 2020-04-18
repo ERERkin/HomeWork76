@@ -7,6 +7,7 @@ import kg.ItAcademy.HomeWork76.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -43,6 +44,17 @@ public class PaymentServiceImpl implements PaymentService {
         Random random = new Random();
         return random.nextInt(9000) + 1000;
     }
+
+    @Override
+    public List<Payment> findAllByCreatedDateBetweenAndByAccountFrom_Client_Id(
+            Date createDateStarted,
+            Date createDateEnd,
+            Long clientId){
+        return paymentRepo.findAllByCreatedDateBetweenAndByAccountFrom_Client_Id(
+                createDateStarted,
+                createDateEnd,
+                clientId);
+    };
 
     @Override
     public List<Payment> getByStatus(Status status) {

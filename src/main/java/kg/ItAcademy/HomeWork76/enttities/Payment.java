@@ -48,4 +48,7 @@ public class Payment {
 
     @Column(name = "code")
     Integer code;
+
+    @Column(name = "attempt")
+    Integer attempt = 0;
 }

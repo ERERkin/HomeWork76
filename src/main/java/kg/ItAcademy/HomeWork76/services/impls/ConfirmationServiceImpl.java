@@ -1,6 +1,7 @@
 package kg.ItAcademy.HomeWork76.services.impls;
 
 import kg.ItAcademy.HomeWork76.enttities.Account;
+import kg.ItAcademy.HomeWork76.enttities.Client;
 import kg.ItAcademy.HomeWork76.enttities.Confirmation;
 import kg.ItAcademy.HomeWork76.enttities.Payment;
 import kg.ItAcademy.HomeWork76.enums.Status;
@@ -40,9 +41,17 @@ public class ConfirmationServiceImpl implements ConfirmationService {
     @Override
     public Confirmation save(Confirmation item) {
         Payment payment = paymentService.getById(item.getPayment().getId());
-        payment.setStatus(payment.getCode() == item.getAnswerCode() ? Status.SUCCESS : Status.FAILED);
-        item.setClient(clientService.getById(item.getClient().getId()));
+        Client client = clientService.getById(item.getClient().getId());
+        payment.setStatus(payment.getAmount().intValue()%2 == 0? Status.SUCCESS : Status.FAILED);
+        payment.setStatus(payment.getCode() == item.getAnswerCode()
+                & client.getCodeWord().equals(item.getAnswerCodeWord())? Status.SUCCESS : Status.PROCESS);
+        if(payment.getStatus().equals(Status.PROCESS)){
+            payment.setAttempt(payment.getAttempt() + 1);
+        }
+        if(payment.getAttempt() == 3) payment.setStatus(Status.BLOCKED);
+        item.setClient(client);
         if (payment.getStatus().equals(Status.SUCCESS)) {
+            payment.setAttempt(0);
             //Get money from
             Account from = accountService.getById(payment.getAccountFrom().getId());
             from.setBalance(from.getBalance().subtract(payment.getAmount()));

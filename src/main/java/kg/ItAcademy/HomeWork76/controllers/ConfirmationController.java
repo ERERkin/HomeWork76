@@ -1,6 +1,7 @@
 package kg.ItAcademy.HomeWork76.controllers;
 
 import kg.ItAcademy.HomeWork76.enttities.Confirmation;
+import kg.ItAcademy.HomeWork76.models.ResponseMessage;
 import kg.ItAcademy.HomeWork76.services.ConfirmationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

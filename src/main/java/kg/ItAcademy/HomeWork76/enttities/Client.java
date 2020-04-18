@@ -23,4 +23,7 @@ public class Client {
 
     @Column(name = "phone_number")
     String phoneNumber;
+
+    @Column(name = "code_word")
+    String codeWord;
 }
